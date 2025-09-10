@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ tambahkan ini
 use Illuminate\Database\Eloquent\Model;
 
-class buku extends Model
+class Buku extends Model
 {
-    protected $table = 'buku';
-    protected $fillable = [
-        'nama',
-        'unit',
-        'image',
-        'kode_buku'
-    ];
+    use HasFactory;
+
+    protected $fillable = ['nama', 'unit', 'image', 'kode_buku'];
 }
