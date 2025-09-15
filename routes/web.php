@@ -8,35 +8,32 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BukuController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/', [FormPengunjungController::class, 'index'])->name('form.index');
+// === Halaman Form untuk pengunjung (tanpa login) ===
+Route::get('/',  [FormPengunjungController::class, 'index'])->name('form.index');
 Route::post('/', [FormPengunjungController::class, 'store'])->name('form.store');
 
+// === Auth route bawaan Laravel ===
 Auth::routes([
-    'register'=> false,
-    'reset' => false,
-    'verify' => false,
-    'confirm' => false
+    'register' => false,
+    'reset'    => false,
+    'verify'   => false,
+    'confirm'  => false,
 ]);
 
-Route::group(['middleware' => ['auth']], function() {
+// === Route yang butuh login ===
+Route::middleware('auth')->group(function () {
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::resource('/pengunjung', PengunjungController::class)
-        ->only(['index','show','destroy','store']);
+    // Route resource pengunjung (index, show, destroy)
+    Route::resource('pengunjung', PengunjungController::class)
+         ->only(['index', 'show', 'destroy']);
 
-    Route::get('/ubah-profil', [ProfilController::class, 'index'])
-        ->name('ubah-profil');
-    Route::post('/ubah-profil', [ProfilController::class, 'update'])
-        ->name('ubah-profil.update');
+    // Profil
+    Route::get('/ubah-profil',  [ProfilController::class, 'index'])->name('ubah-profil');
+    Route::post('/ubah-profil', [ProfilController::class, 'update'])->name('ubah-profil.update');
 
-    Route::resource('/admin', AdminController::class);
-    Route::resource('Buku', App\Http\Controllers\BukuController::class);
-    Route::resource('Buku', BukuControllers::class);
-    Route::get('/Buku', [BukuControllers::class, 'index'])->name('buku.index');
+    // Admin & Buku
+    Route::resource('admin', AdminController::class);
+    Route::resource('buku',  BukuController::class);
 });

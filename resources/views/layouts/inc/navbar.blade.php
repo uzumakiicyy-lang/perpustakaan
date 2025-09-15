@@ -8,22 +8,8 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <!-- Search -->
-              <!-- /Search -->
-
-              <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <!-- Language -->
-                <!--/ Language -->
-
-                <!-- Style Switcher -->
-                <!-- / Style Switcher-->
-
-                <!-- Quick links  -->
-                <!-- Quick links -->
-
-                <!-- Notification -->
-
-                <!--/ Notification -->
+               
+                <ul class="navbar-nav flex-row align-items-center ms-auto">
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -35,32 +21,31 @@
                     <div class="avatar avatar-online">
                       <img src="{{ asset ('/img/avatars/1.png') }}" alt class="rounded-circle" />
                     </div>
-                    <span>{{auth::user()->name }}</span>
+                    <span>{{ Auth::user()->name  }}</span>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
-                     <li>
-                      <div class="d-grid px-2 pt-2 pb-1">
-                        <a class="btn btn-sm btn-danger d-flex" href="{{ route('ubah-profil') }}">
-                          <small class="align-middle">ubah profil</small>
-                          <i class="ti ti-logout ms-2 ti-14px"></i>
-                        </a>
-                      </div>
+                  
+                  
+                
+                  
+                    <li>
+                      <a class="dropdown-item" href="{{ route('ubah-profil') }}">
+                        <i class="ti ti-users me-3 ti-md"></i><span class="align-middle">Ubah Profil</span>
+                      </a>
                     </li>
                     <li>
-  <div class="d-grid px-2 pt-2 pb-1">
-    <a class="btn btn-sm btn-danger d-flex" 
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-       href="javascript:void(0);">
-      <small class="align-middle">Logout</small>
-      <i class="ti ti-logout ms-2 ti-14px"></i>
-    </a>
-    <form id="logout-form" method="POST" action="{{ route('logout') }}">
-      @csrf
-    </form>
-  </div>
-</li>
+                      <div class="d-grid px-2 pt-2 pb-1">
+                        <a class="btn btn-sm btn-danger d-flex" onclick="$('#logaut-form').submit()" href="javascript:void();">
+                          <small class="align-middle">Logout</small>
+                          <i class="ti ti-logout ms-2 ti-14px"></i>
+                        </a>
 
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                          @csrf
+                        </form>
+                      </div>
+                    </li>
                   </ul>
                 </li>
                 <!--/ User -->
@@ -68,4 +53,12 @@
             </div>
 
             <!-- Search Small Screens -->
+            <div class="navbar-search-wrapper search-input-wrapper d-none">
+              <input
+                type="text"
+                class="form-control search-input container-xxl border-0"
+                placeholder="Search..."
+                aria-label="Search..." />
+              <i class="ti ti-x search-toggler cursor-pointer"></i>
+            </div>
           </nav>
