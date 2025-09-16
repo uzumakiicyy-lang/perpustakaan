@@ -15,10 +15,14 @@ class PengunjungFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama'  => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'nama'       => $this->faker->name(),
+            'email'      => $this->faker->unique()->safeEmail(),
             // Nomor telepon Indonesia (maks 12–13 digit, aman di varchar(16))
-            'telp'  => $this->faker->numerify('08###########'),
+            'telp'       => $this->faker->numerify('08###########'),
+
+            // ✅ Tambahkan ini supaya tanggal acak
+            'created_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
+            'updated_at' => now(),
         ];
     }
 }

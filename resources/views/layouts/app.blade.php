@@ -45,6 +45,22 @@
   <script src="{{ asset('vendor/js/template-customizer.js') }}"></script>
   <script src="{{ asset('js/config.js') }}"></script>
   @stack('styles')
+
+  <!-- === Tambahan: Custom warna sidebar === -->
+  <style>
+      /* warna cream lembut */
+      .bg-menu-theme {
+          background-color: #f5f0e1 !important;
+      }
+
+      /* jika mau coklat muda gunakan ini:
+      .bg-menu-theme {
+          background-color: #a67c52 !important;
+      }
+      */
+  </style>
+  <!-- === Akhir tambahan === -->
+
 </head>
 
 <body>
@@ -103,5 +119,10 @@
   <!-- Main JS -->
   <script src="{{ asset('js/main.js') }}"></script>
   @stack('scripts')
+
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
 </body>
 </html>

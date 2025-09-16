@@ -127,3 +127,15 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+/* === Custom warna sidebar === */
+.bg-menu-theme {
+    background-color: #f5f0e1 !important;  /* warna cream */
+    /* atau kalau mau coklat muda: background-color: #a67c52 !important; */
+}
+
+.app-brand-logo.demo img {
+    background-color: #f5f0e1; /* samakan persis dengan sidebar */
+    border-radius: 50%;
+}
+
