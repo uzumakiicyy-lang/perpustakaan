@@ -29,11 +29,12 @@
 
         <!-- Daftar Pengunjung -->
         <li class="menu-item">
-            <a href="{{ route('buku.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-users-group"></i>
-                <div>Daftar Pengunjung</div>
+             <a href="{{ route('buku.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-books"></i>
+                <div>Daftar Buku</div>
             </a>
         </li>
+
 
         <!-- Pengunjung -->
         <li class="menu-item">

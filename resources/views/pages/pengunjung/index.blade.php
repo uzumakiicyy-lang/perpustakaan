@@ -24,7 +24,7 @@
     <tr>
         <th>No</th>
         <th>Nama</th>
-        <th>No. Telepon</th>
+        <th>No Telepon</th>
         <th>Buku</th>
         <th>Tanggal</th>
         <th>Aksi</th>

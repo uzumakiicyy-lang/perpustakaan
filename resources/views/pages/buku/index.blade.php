@@ -28,19 +28,26 @@
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->unit }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $item->image) }}" 
-                                         alt="cover" width="80">
+                                    @if ($item->image)
+                                        <img src="{{ asset('storage/' . $item->image) }}" 
+                                             alt="cover buku" width="80">
+                                    @else
+                                        <span class="text-muted">No Image</span>
+                                    @endif
                                 </td>
                                 <td>{{ $item->kode_buku }}</td>
                                 <td>
-                                    <a href="{{ route('buku.show', $item->id) }}" class="btn btn-sm btn-info">
+                                    <a href="{{ route('buku.show', $item->id) }}" 
+                                       class="btn btn-sm btn-info" title="Lihat Detail">
                                         <span class="ti ti-eye"></span>
                                     </a>
-                                    <a href="{{ route('buku.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('buku.edit', $item->id) }}" 
+                                       class="btn btn-sm btn-warning" title="Edit">
                                         <span class="ti ti-pencil"></span>
                                     </a>
                                     <a href="javascript:;" class="btn btn-sm btn-danger"
-                                       onclick="actionDelete('{{ route('buku.destroy', $item->id) }}')">
+                                       onclick="actionDelete('{{ route('buku.destroy', $item->id) }}')" 
+                                       title="Hapus">
                                         <span class="ti ti-trash"></span>
                                     </a>
                                 </td>
@@ -59,14 +66,18 @@
 @endsection
 
 @push('styles')
+    {{-- DataTables & SweetAlert Styles --}}
     <link rel="stylesheet" href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/libs/sweetalert2/sweetalert2.css') }}">
 @endpush
 
 @push('scripts')
+    {{-- DataTables Core + Bootstrap Integration --}}
+    <script src="{{ asset('vendor/libs/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.js') }}"></script>
     <script src="{{ asset('vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('.dataTable').DataTable();
@@ -88,12 +99,24 @@
             });
         }
     </script>
+
+    {{-- Notifikasi SweetAlert --}}
     @if (Session::has('success'))
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ Session::get('success') }}'
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan',
+                html: '{!! implode('<br>', $errors->all()) !!}'
             });
         </script>
     @endif

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Buku;
 use App\Models\Pengunjung;
-use App\Models\Buku; // ✅ tambahkan model Buku
+use Illuminate\Http\Request; // ✅ tambahkan model Buku
 
 class FormPengunjungController extends Controller
 {
     public function index()
     {
-        return view('pengunjung.index');
         // ambil semua data pengunjung
         $pengunjung = Pengunjung::orderBy('id', 'ASC')->get();
 
@@ -23,10 +22,10 @@ class FormPengunjungController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'  => 'required',
+            'nama' => 'required',
             'email' => 'required|email',
-            'telp'  => 'required',
-            'buku_id' => 'required'
+            'telp' => 'required',
+            'buku_id' => 'required',
         ]);
 
         Pengunjung::create($request->all());

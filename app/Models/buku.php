@@ -2,12 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ tambahkan ini
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Buku extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'unit', 'image', 'kode_buku'];
+    // WAJIB karena tabel di migration bernama "buku" (singular)
+    protected $table = 'buku';
+
+    protected $fillable = [
+        'nama',
+        'unit',
+        'image',
+        'kode_buku',
+    ];
 }
