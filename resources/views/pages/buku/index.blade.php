@@ -2,87 +2,76 @@
 @section('title', 'Data Buku')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Data Buku</h3>
-            <a href="{{ route('buku.create') }}" class="btn btn-primary mb-3">
-                <span class="ti ti-plus me-1"></span> Tambah
-            </a>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Daftar Buku</h3>
+        <a href="{{ route('buku.create') }}" class="btn btn-primary mb-3">
+            <span class="ti ti-plus me-1"></span> Tambah
+        </a>
 
-            <div class="card card-body">
-                <table class="table table-striped dataTable">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Unit</th>
-                            <th>Image</th>
-                            <th>Kode Buku</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($buku as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->unit }}</td>
-                                <td>
-                                    @if ($item->image)
-                                        <img src="{{ asset('storage/' . $item->image) }}" 
-                                             alt="cover buku" width="80">
-                                    @else
-                                        <span class="text-muted">No Image</span>
-                                    @endif
-                                </td>
-                                <td>{{ $item->kode_buku }}</td>
-                                <td>
-                                    <a href="{{ route('buku.show', $item->id) }}" 
-                                       class="btn btn-sm btn-info" title="Lihat Detail">
-                                        <span class="ti ti-eye"></span>
-                                    </a>
-                                    <a href="{{ route('buku.edit', $item->id) }}" 
-                                       class="btn btn-sm btn-warning" title="Edit">
-                                        <span class="ti ti-pencil"></span>
-                                    </a>
-                                    <a href="javascript:;" class="btn btn-sm btn-danger"
-                                       onclick="actionDelete('{{ route('buku.destroy', $item->id) }}')" 
-                                       title="Hapus">
-                                        <span class="ti ti-trash"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <div class="row">
+            @foreach ($buku as $item)
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {{-- Gambar cover buku --}}
+                        @if ($item->image)
+                            <img src="{{ asset('storage/' . $item->image) }}" 
+                                 class="card-img-top" 
+                                 alt="cover buku" 
+                                 style="height: 250px; object-fit: cover;">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center bg-light" 
+                                 style="height: 250px;">
+                                <span class="text-muted">No Image</span>
+                            </div>
+                        @endif
+
+                        {{-- Informasi buku --}}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ $item->nama }}</h5>
+                            <small class="text-muted d-block">Kode: {{ $item->kode_buku }}</small>
+                            <small class="text-muted d-block">Unit: {{ $item->unit }}</small>
+                        </div>
+
+                        {{-- Tombol aksi --}}
+                        <div class="card-footer text-center">
+                            <a href="{{ route('buku.show', $item->id) }}" 
+                               class="btn btn-sm btn-info" 
+                               title="Lihat Detail">
+                                <span class="ti ti-eye"></span>
+                            </a>
+                            <a href="{{ route('buku.edit', $item->id) }}" 
+                               class="btn btn-sm btn-warning" 
+                               title="Edit">
+                                <span class="ti ti-pencil"></span>
+                            </a>
+                            <a href="javascript:;" class="btn btn-sm btn-danger"
+                               onclick="actionDelete('{{ route('buku.destroy', $item->id) }}')" 
+                               title="Hapus">
+                                <span class="ti ti-trash"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
+</div>
 
-    <form id="form-delete" action="" method="POST" class="d-none">
-        @csrf
-        @method('DELETE')
-    </form>
+<form id="form-delete" action="" method="POST" class="d-none">
+    @csrf
+    @method('DELETE')
+</form>
 @endsection
 
 @push('styles')
-    {{-- DataTables & SweetAlert Styles --}}
-    <link rel="stylesheet" href="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/libs/sweetalert2/sweetalert2.css') }}">
 @endpush
 
 @push('scripts')
-    {{-- DataTables Core + Bootstrap Integration --}}
-    <script src="{{ asset('vendor/libs/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('vendor/libs/datatables-bs5/datatables.bootstrap5.js') }}"></script>
     <script src="{{ asset('vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.dataTable').DataTable();
-        });
-
         function actionDelete(url) {
             Swal.fire({
                 title: "Apakah Anda yakin?",
